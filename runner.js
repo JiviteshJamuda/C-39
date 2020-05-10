@@ -3,6 +3,7 @@ class Runner{
         this.index = null;
         this.distance = 0;
         this.name = null;
+        this.rank = null;
     }
 
     updateCount(count){
