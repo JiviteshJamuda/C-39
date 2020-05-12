@@ -1,5 +1,8 @@
 class Game{
-    constructor(){}
+    constructor(){
+        this.resetButton; 
+
+    }
 
     getState(){
         var gameStateRef = database.ref('gameState');
@@ -26,19 +29,32 @@ class Game{
             form.display();
         };
 
-        runner1 = createSprite(100,150);
-        runner2 = createSprite(100,300);
-        runner3 = createSprite(100,450);
-        runner4 = createSprite(100,600);
+        runner1 = createSprite(100,150,30,60);
+        runner2 = createSprite(100,300,30,60);
+        runner3 = createSprite(100,450,30,60);
+        runner4 = createSprite(100,600,30,60);
         runners = [runner1,runner2,runner3,runner4];
+
+        ground1 = createSprite(1000,310,9999,1);
+        ground1.shapeColor = "white";
+        ground2 = createSprite(1000,460,9999,1);
+        ground2.shapeColor = "white";
+        ground3 = createSprite(1000,610,9999,1);
+        ground3.shapeColor = "white";
+        ground4 = createSprite(1000,760,9999,1);
+        ground4.shapeColor = "white";
+
+        runner1.collide(ground1);
     }
 
     play(){
         form.hide();
         Runner.getRunnerInfo();
+        this.resetButton = createButton("Restart");
+        this.resetButton.position(displayWidth-100,50);
 
         if(allRunners !== undefined){
-            background(rgb(5,219,116));
+            background(rgb(186,87,74));
 
             var index = 0;
 
@@ -63,11 +79,15 @@ class Game{
 
         };
 
-        if(keyIsDown(UP_ARROW) && runner.index !== null){
+        if(keyIsDown(RIGHT_ARROW) && runner.index !== null){
             runner.distance += 10;
             runner.update();
         };
 
+        if(keyIsDown("space") && runner.index !== null){
+            runner.velocityY = -1;
+            runner.update();
+        };
 
         if(runner.distance > 500){
             gameState = 2;
@@ -79,6 +99,11 @@ class Game{
 
     end(){
         console.log("GAME ENDED");
+
+        this.resetButton.mousePressed(()=>{
+            runner.updateCount(0);
+            game.update(0);
+        });
     }
 
 }

@@ -3,6 +3,7 @@ var form,game,runner;
 var runnerCount = 0, gameState = 0;
 var allRunners;
 var runners,runner1,runner2,runner3,runner4;
+var ground1,ground2,ground3,ground4;
 
 function setup(){
   database = firebase.database();
@@ -28,5 +29,4 @@ function draw(){
     game.end();
   }
 
-  console.log(allRunners);
 }
